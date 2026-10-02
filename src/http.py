@@ -1,10 +1,6 @@
 from datetime import datetime, timezone
 from pathlib import Path
 
-def foo():
-    return 23
-
-
 def create_envelope(start_line: str, headers: dict) -> str:
     lines = []
     lines.append(start_line)
