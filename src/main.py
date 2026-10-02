@@ -4,16 +4,30 @@ def main():
     LOG = "\033[35m"
     RESET = "\033[0m"
 
-    request = client_send_request()
+    client = HTTPClient()
+    server = HTTPServer()
+
+    request = client.send_request()
     print(f"{LOG}request:{RESET}\n{request}")
 
-    content = server_receive_request(request)
-    print(f"{LOG}content:{RESET}\n{content}")
+    server.receive_request(request)
+    if server.process_request():
+        print(f"{LOG}process_request:{RESET} success")
+    else:
+        print(f"{LOG}process_request:{RESET} fail")
+        return
 
-    response = server_send_response(content)
+    response = server.send_response()
     print(f"{LOG}response:{RESET}\n{response}")
 
-    html = client_receive_response(response)
+    client.receive_response(response)
+    if client.process_response():
+        print(f"{LOG}process_response:{RESET} success")
+    else:
+        print(f"{LOG}process_response:{RESET} fail")
+
+    html = client.get_html()
+
     print(f"{LOG}html:{RESET}\n{html}")
 
 
